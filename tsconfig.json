@@ -16,7 +16,15 @@
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
   "include": [
-    "src",
-    "src/app.ts"
-, "prisma/generated/prisma", "prisma/generated"  ]
+    "src", // Includes all files under the src directory
+    // "src/app.ts" // This is redundant if "src" is included
+    "prisma/generated/prisma",
+    "prisma/generated"
+  ],
+  "exclude": [
+    "node_modules", // Standard exclusion
+    "dist",         // Exclude the output directory
+    "src/routes/reserve/add.ts", // Exclude the missing file
+    "src/routes/reserve/all.ts"  // Exclude the other missing file
+  ]
 }

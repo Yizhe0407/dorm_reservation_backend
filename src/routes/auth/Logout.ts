@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { logout } from '../controllers/AuthController'
+import { logout } from '../../controllers/AuthController'
 
 const router = Router()
 router.post('/logout', logout)

@@ -2,10 +2,11 @@
 import cors from "cors";
 import dotenv from 'dotenv';
 import express, { RequestHandler } from 'express';
-import login from './routes/Login';
-import logout from './routes/Logout';
-import profile from './routes/Profile';
-import register from './routes/Register';
+import login from './routes/auth/Login';
+import logout from './routes/auth/Logout';
+import profile from './routes/auth/Profile';
+import register from './routes/auth/Register';
+import reserve from './routes/reserve';
 import cookieParser from 'cookie-parser';
 import verifyJWT from './middleware/verifyJWT';
 
@@ -27,6 +28,8 @@ app.use(cookieParser()); // 讓 Express 能解析 cookie
 app.use('/api', register)
 app.use('/api', login)
 app.use('/api', logout)
+
+app.use('/api/reserve', reserve)
 
 // Apply JWT verification middleware only to routes defined *after* this line
 app.use(verifyJWT as RequestHandler);
