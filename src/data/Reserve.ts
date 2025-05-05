@@ -25,7 +25,7 @@ export const addReserve = async (building: string, floor: string, room: string) 
             floor,
             room,
             status: '等待檢查',
-            inspector: '尚未檢查',
+            inspector: '尚未指派',
         },
     });
     return reserve;
