@@ -6,6 +6,7 @@ import login from './routes/Login';
 import logout from './routes/Logout';
 import profile from './routes/Profile';
 import register from './routes/Register';
+import reserve from './routes/Reserve';
 import cookieParser from 'cookie-parser';
 import verifyJWT from './middleware/verifyJWT';
 
@@ -24,6 +25,7 @@ app.use(express.json());
 app.use(cookieParser()); // 讓 Express 能解析 cookie
 
 // Public routes - should be defined before authentication middleware
+app.use('/api', reserve)
 app.use('/api', register)
 app.use('/api', login)
 app.use('/api', logout)
@@ -32,6 +34,7 @@ app.use('/api', logout)
 app.use(verifyJWT as RequestHandler);
 
 app.use('/api', profile)
+
 
 const port = 4000;
 app.listen(port, () => {
