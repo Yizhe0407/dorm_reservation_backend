@@ -16,20 +16,40 @@ export const add = async (req: Request, res: Response) => {
 }
 
 export const updateStatus = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const { inspector } = req.body;
+    const { reservationId, status, inspector } = req.body;
+
+    // Debug logging
+    console.log('Request body:', req.body);
+    console.log('Reservation ID:', reservationId, 'Type:', typeof reservationId);
+    console.log('Status:', status);
+    console.log('Inspector:', inspector);
+
+    // Validate required fields
+    if (!reservationId) {
+        return res.status(400).json({ message: 'Reservation ID is required' });
+    }
+    if (!status) {
+        return res.status(400).json({ message: 'Status is required' });
+    }
+    if (!inspector) {
+        return res.status(400).json({ message: 'Inspector is required' });
+    }
+
     try {
-        const reservation = await getAll();
-        if (!reservation) {
-            return res.status(404).json({ message: 'Reservation not found' });
+        if (status === '合格') {
+            const reservation = await setPassed(reservationId, inspector);
+            res.status(200).json(reservation);
+        } else if (status === '不合格') {
+            const reservation = await setNotPassed(reservationId, inspector);
+            res.status(200).json(reservation);
+        } else {
+            return res.status(400).json({ message: 'Invalid status' });
         }
-        const updatedReservation = await setPassed(id, inspector);
-        res.status(200).json(updatedReservation);
     } catch (error) {
         if (error instanceof Error) {
-            res.status(500).json({ message: 'Error setting reservation as passed', error: error.message });
+            res.status(500).json({ message: 'Error updating reservation status', error: error.message });
         } else {
-            res.status(500).json({ message: 'Error setting reservation as passed', error: 'Unknown error' });
+            res.status(500).json({ message: 'Error updating reservation status', error: 'Unknown error' });
         }
     }
 }

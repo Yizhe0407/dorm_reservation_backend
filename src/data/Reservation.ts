@@ -17,6 +17,9 @@ export const Add = async (building: string, floor: string, room: string) => {
 }
 
 export const setPassed = async (id: string, inspector: string) => {
+    console.log('setPassed called with ID:', id, 'Type:', typeof id);
+    console.log('setPassed called with inspector:', inspector);
+
     return await prisma.reservation.update({
         where: {
             id: id,
@@ -29,6 +32,9 @@ export const setPassed = async (id: string, inspector: string) => {
     });
 };
 export const setNotPassed = async (id: string, inspector: string) => {
+    console.log('setNotPassed called with ID:', id, 'Type:', typeof id);
+    console.log('setNotPassed called with inspector:', inspector);
+
     return await prisma.reservation.update({
         where: {
             id: id,
