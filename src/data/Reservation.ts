@@ -16,6 +16,31 @@ export const Add = async (building: string, floor: string, room: string) => {
     });
 }
 
+export const setPassed = async (id: string, inspector: string) => {
+    return await prisma.reservation.update({
+        where: {
+            id: id,
+        },
+        data: {
+            status: '合格',
+            inspector: inspector,
+            updatedAt: new Date(),
+        },
+    });
+};
+export const setNotPassed = async (id: string, inspector: string) => {
+    return await prisma.reservation.update({
+        where: {
+            id: id,
+        },
+        data: {
+            status: '不合格',
+            inspector: inspector,
+            updatedAt: new Date(),
+        },
+    });
+};
+
 export const getAll = async () => {
     return await prisma.reservation.findMany();
 };

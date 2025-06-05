@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Add, getAll, getPassed, getNotPassed, getWaiting, deleteReservation } from '../data/Reservation';
+import { Add, setPassed, setNotPassed, getAll, getPassed, getNotPassed, getWaiting, deleteReservation } from '../data/Reservation';
 
 export const add = async (req: Request, res: Response) => {
     const { building, floor, room } = req.body;
@@ -11,6 +11,25 @@ export const add = async (req: Request, res: Response) => {
             res.status(500).json({ message: 'Error adding reservation', error: error.message });
         } else {
             res.status(500).json({ message: 'Error adding reservation', error: 'Unknown error' });
+        }
+    }
+}
+
+export const updateStatus = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { inspector } = req.body;
+    try {
+        const reservation = await getAll();
+        if (!reservation) {
+            return res.status(404).json({ message: 'Reservation not found' });
+        }
+        const updatedReservation = await setPassed(id, inspector);
+        res.status(200).json(updatedReservation);
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(500).json({ message: 'Error setting reservation as passed', error: error.message });
+        } else {
+            res.status(500).json({ message: 'Error setting reservation as passed', error: 'Unknown error' });
         }
     }
 }
