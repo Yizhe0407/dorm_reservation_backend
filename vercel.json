@@ -11,5 +11,14 @@
       "src": "/(.*)",
       "dest": "src/app.ts"
     }
-  ]
+  ],
+  "functions": {
+    "src/app.ts": {
+      "includeFiles": [
+        "prisma/schema.prisma",
+        "node_modules/.prisma/client/**",
+        "node_modules/@prisma/client/**"
+      ]
+    }
+  }
 }
