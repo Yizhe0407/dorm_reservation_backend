@@ -18,23 +18,6 @@ export const add = async (req: Request, res: Response) => {
 export const updateStatus = async (req: Request, res: Response) => {
     const { reservationId, status, inspector } = req.body;
 
-    // Debug logging
-    console.log('Request body:', req.body);
-    console.log('Reservation ID:', reservationId, 'Type:', typeof reservationId);
-    console.log('Status:', status);
-    console.log('Inspector:', inspector);
-
-    // Validate required fields
-    if (!reservationId) {
-        return res.status(400).json({ message: 'Reservation ID is required' });
-    }
-    if (!status) {
-        return res.status(400).json({ message: 'Status is required' });
-    }
-    if (!inspector) {
-        return res.status(400).json({ message: 'Inspector is required' });
-    }
-
     try {
         if (status === '合格') {
             const reservation = await setPassed(reservationId, inspector);
