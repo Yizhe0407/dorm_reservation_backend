@@ -1,15 +1,37 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "src/app.ts",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "src/app.ts"
-    }
-  ]
+  "name": "backend",
+  "packageManager": "yarn@4.9.1",
+  "prisma": {
+    "schema": "./prisma/schema.prisma"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "nodemon --watch \"*.ts\" --exec \"ts-node\" ./src/app.ts",
+    "lint": "eslint . --ext .ts",
+    "db:dev": "pnpify prisma migrate dev",
+    "db:deploy": "pnpify prisma migrate deploy",
+    "db:generate": "pnpify prisma generate"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.7.0",
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "prisma": "^6.7.0",
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5",
+    "@types/cookie-parser": "^1",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^22.13.14",
+    "@yarnpkg/pnpify": "^4.1.4",
+    "nodemon": "^3.1.10",
+    "typescript": "^5.8.2"
+  }
 }
